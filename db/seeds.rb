@@ -24,13 +24,13 @@ def make_users
     email = "user#{n+1}@gmail.com"
     password  = "123456789"
     temp = rand(31)
-    source = "http://localhost:8484/#{temp}.jpg"
+    source = "http://localhost:8000/#{temp}.jpg"
     image = open(source)
     u = User.create(name:     name,
-     email:    email,
-     password: password,
-     password_confirmation: password,
-     avatar: image)
+                    email:    email,
+                    password: password,
+                    password_confirmation: password,
+                    avatar: image)
     if(n< 7)
       u.verify!
     end
@@ -44,10 +44,10 @@ end
 
 def make_categories
   name=[ "Architecture", "Art", "Cars & Motorcycle", "Design", "DIY & Crafts", "Education",
-          "Films & Musics & Books", "Fitness", "Food & Drinks", "Gardening", "Geek", "Hair & Beauty",
-          "History", "Holiday", "Home Decor", "Humor", "Kids", "My Life", "Women 's Apparel", "Men 's Apparel",
-          "Outdoors", "People", "Pets", "Photography", "Print & Posters", "Products", "Science & Nature",
-          "Sports", "Technology", "Travel & Places", "Wedding & Events", "Others"
+         "Films & Musics & Books", "Fitness", "Food & Drinks", "Gardening", "Geek", "Hair & Beauty",
+         "History", "Holiday", "Home Decor", "Humor", "Kids", "My Life", "Women 's Apparel", "Men 's Apparel",
+         "Outdoors", "People", "Pets", "Photography", "Print & Posters", "Products", "Science & Nature",
+         "Sports", "Technology", "Travel & Places", "Wedding & Events", "Others"
   ]
   i = 0
   while i < 32 do
@@ -85,7 +85,7 @@ def make_notifications
   liked_photo = User.first.boxes[0].photos[0]
 
   users.each do |user|
-   Notification.create!(source_id: user.id, target_id: 1, relation_type: "user_photo_actions like #{liked_photo.id}")
+    Notification.create!(source_id: user.id, target_id: 1, relation_type: "user_photo_actions like #{liked_photo.id}")
   end
 
   puts 'make notifications'
@@ -121,8 +121,8 @@ def make_photos
       5.times do
         name = Faker::PhoneNumber.phone_number
         description = Faker::Internet.domain_name
-        temp = rand(30)
-        source = "http://localhost:8484/#{temp}.jpg"
+        temp = rand(31)
+        source = "http://localhost:8000/#{temp}.jpg"
         image = open(source)
         if !image.is_a? StringIO
           b.photos.create(name: name, description: description, image: image)
@@ -149,11 +149,11 @@ end
 
 
 #make new db
-  make_users
-  make_categories
-#  make_boxes
-#  make_photos
-#  make_relationships
-#  make_users_like_photos
+make_users
+make_categories
+make_boxes
+make_photos
+make_relationships
+# make_users_like_photos
 
 puts 'seed completed'
